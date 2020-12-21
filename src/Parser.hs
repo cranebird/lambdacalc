@@ -3,7 +3,6 @@ module MonadParser (
 )
 where
 import Data.Char
-import Data.String
 import Control.Applicative
 import LambdaTerm
 
@@ -124,7 +123,7 @@ parse inp = case parse' term' inp of
 -- (d) (\u.vuu)zy === (((\u.((vu)u))z)y)
 -- (e) ux(yz)(\v.vy) === (((ux)(yz))(\v.(vy)))
 -- (f) (\xyz.xz(yz))uvw === ((((\x.(\y.(\z.((xz)(yz)))))u)v)w)
--- |
+-- | parse test
 -- >>> parse "x" == Var "x"
 -- True
 -- >>> parse "(xy)" == App (Var "x") (Var "y")
@@ -144,8 +143,7 @@ parse inp = case parse' term' inp of
 -- >>> parse "((((\\x.(\\y.(\\z.((xz)(yz)))))u)v)w)" == (App (App (App (Lmd "x" (Lmd "y" (Lmd "z" (App (App (Var "x") (Var "z")) (App (Var "y") (Var "z")))))) (Var "u")) (Var "v")) (Var "w"))
 -- True
 
--- abbreviation
--- |     
+-- | parse abbreviation
 -- >>> parse "xyz(yx)"
 -- xyz(yx)
 -- >>> parse "\\x.uxy"
@@ -158,3 +156,4 @@ parse inp = case parse' term' inp of
 -- ux(yz)(\v.vy)
 -- >>> parse "(\\xyz.xz(yz))uvw"
 -- (\xyz.xz(yz))uvw
+
