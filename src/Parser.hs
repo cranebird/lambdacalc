@@ -1,4 +1,4 @@
-module MonadParser (
+module Parser (
   parse
 )
 where
