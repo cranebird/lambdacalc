@@ -1,13 +1,16 @@
 import Test.Hspec
 import Parser
+import LambdaTerm
 
 specParse :: Spec
 specParse = do
-  describe "test" $ do
-    it "test0" $
-      show (parse "xy") `shouldBe` "xy"
-    it "test1" $
-      show (parse "((xy)z)") `shouldBe` "xyz"
+  describe "Parser.parse" $ do
+    it "\"x\" to Var \"x\"" $
+      parse "x" `shouldBe` Var "x"
+    it "\"(xy)\" to App (Var \"x\") (Var \"y\")" $
+      parse "xy" `shouldBe` App (Var "x") (Var "y")
+    it "\"(\\x.y)\" to Lmd \"x\" \"y\"" $
+      parse "(\\x.y)" `shouldBe` Lmd "x" (Var "y")
 
 main :: IO ()
 main = hspec $ do

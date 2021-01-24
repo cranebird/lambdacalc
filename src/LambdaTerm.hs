@@ -15,7 +15,7 @@ data Term = Var VarName -- Variable
 -- simple printer
 showTerm :: Term -> String
 showTerm (Var x) = x
-showTerm (Lmd x body) = "(\\" ++ x ++ showTerm body ++ ")"
+showTerm (Lmd x body) = "(\\" ++ x ++ "." ++ showTerm body ++ ")"
 showTerm (App x y) = "(" ++ showTerm x ++ showTerm y ++ ")"
 
 -- pretty printer

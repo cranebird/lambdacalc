@@ -6,8 +6,6 @@ import Data.Char
 import Control.Applicative
 import LambdaTerm
 
-data Token = TVar String | TLparen | TRparen | TDot | TLambda deriving (Eq, Show)
-
 newtype Parser a = P (String -> Maybe (a, String))
 
 parse' :: Parser a -> String -> Maybe (a, String)
@@ -107,7 +105,7 @@ lambda' = do
   m <- term'
   return $ lmd xs m
   where
-    lmd (x0:[]) m = Lmd x0 m
+    lmd [x0] m = Lmd x0 m
     lmd (x0:xs) m = Lmd x0 (lmd xs m)
     lmd [] _ = error "invalid lmd"
 
@@ -156,4 +154,9 @@ parse inp = case parse' term' inp of
 -- ux(yz)(\v.vy)
 -- >>> parse "(\\xyz.xz(yz))uvw"
 -- (\xyz.xz(yz))uvw
-
+-- >>> parse "\\x.yz"
+-- \x.yz
+-- >>> parse "\\x.(yz)"
+-- \x.yz
+-- >>> parse "(\\x.(yz))"
+-- \x.yz
